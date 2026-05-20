@@ -1,0 +1,114 @@
+.demo-header {
+    margin-bottom: 2rem;
+}
+
+.demo-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.demo-card h3 {
+    color: #2563eb;
+    margin-bottom: 1rem;
+}
+
+.copy-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.copy-btn:hover {
+    background: #1e40af;
+}
+
+.sample-text {
+    background: #f1f5f9;
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    word-break: break-all;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.nav-btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.nav-btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.nav-btn-primary:hover {
+    background: #1e40af;
+    transform: translateY(-2px);
+}
+
+.nav-btn-secondary {
+    background: #64748b;
+    color: white;
+}
+
+.nav-btn-secondary:hover {
+    background: #475569;
+    transform: translateY(-2px);
+}
+
+.demo-h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.demo-note {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.demo-alert-top {
+    margin-top: 1rem;
+}
+
+.demo-ul-reset {
+    list-style-type: none;
+    margin-left: 0;
+}
+
+.demo-final-cta {
+    margin-top: 1.5rem;
+}
+
+.demo-inline-block {
+    display: inline-block;
+}
+
