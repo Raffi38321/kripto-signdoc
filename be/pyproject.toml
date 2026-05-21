@@ -1,0 +1,27 @@
+[project]
+name = "signdoc-be"
+version = "1.0.0"
+description = "SignDoc — Digital Document Signature API (RSA-2048 + SHA-256)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "python-multipart>=0.0.12",
+    "cryptography>=43.0.0",
+    "bcrypt>=4.2.0",
+    "python-jose[cryptography]>=3.3.0",
+    "pydantic[email]>=2.9.0",
+    "email-validator>=2.2.0",
+    "reportlab>=4.2.0",
+]
+
+[project.scripts]
+signdoc = "app.main:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]

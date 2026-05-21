@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignDoc — Aplikasi Tanda Tangan Digital</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/modal.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>SignDoc</h1>
+                <p>Sistem Tanda Tangan Digital Dokumen — RSA-2048 &amp; SHA-256</p>
+                <p id="authStatus" class="header-subtitle">Belum login</p>
+            </div>
+            <div class="header-actions">
+                <a href="home.html" class="btn btn-secondary btn-sm">Beranda</a>
+                <a href="guide.html" class="btn btn-secondary btn-sm">Panduan</a>
+                <button id="logoutBtn" class="btn btn-danger btn-sm hidden">Keluar</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <nav class="tab-navigation" id="mainTabs">
+                <button class="tab-btn active" data-tab="auth">Akun</button>
+                <button class="tab-btn" data-tab="documents">Dokumen</button>
+                <button class="tab-btn" data-tab="sign">Tanda Tangan</button>
+                <button class="tab-btn" data-tab="verify">Verifikasi</button>
+                <button class="tab-btn" data-tab="history">Riwayat</button>
+            </nav>
+
+            <!-- Auth -->
+            <section id="auth" class="tab-content active">
+                <div class="grid-2">
+                    <div class="card">
+                        <h2>Registrasi</h2>
+                        <p class="description">Membuat akun + pasangan kunci RSA-2048 (privat terenkripsi di server)</p>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="regUsername" placeholder="min. 3 karakter">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="regEmail" placeholder="email@domain.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="regPassword" placeholder="min. 8 karakter (untuk enkripsi kunci privat)">
+                        </div>
+                        <button id="registerBtn" class="btn btn-primary">Daftar &amp; Generate Kunci</button>
+                    </div>
+                    <div class="card">
+                        <h2>Login</h2>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="loginUsername">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="loginPassword">
+                        </div>
+                        <button id="loginBtn" class="btn btn-primary">Masuk</button>
+                    </div>
+                </div>
+                <div id="profileCard" class="card hidden">
+                    <h2>Profil &amp; Kunci Publik</h2>
+                    <div class="detail-row"><label>Username</label><span id="profileUsername"></span></div>
+                    <div class="form-group">
+                        <label>Kunci Publik (PEM)</label>
+                        <textarea id="profilePublicKey" readonly rows="8"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Documents -->
+            <section id="documents" class="tab-content">
+                <div class="card">
+                    <h2>Upload Dokumen</h2>
+                    <p class="description">PDF atau teks — server menghitung hash SHA-256</p>
+                    <div class="form-group">
+                        <input type="file" id="uploadFile" accept=".txt,.pdf,.md,.json,.csv">
+                    </div>
+                    <button id="uploadBtn" class="btn btn-primary">Upload &amp; Hash</button>
+                    <div id="uploadResult" class="info-box hidden"></div>
+                </div>
+                <div class="card">
+                    <h2>Dokumen Saya (Multi-Signer)</h2>
+                    <div id="documentsList" class="documents-list"></div>
+                </div>
+            </section>
+
+            <!-- Sign -->
+            <section id="sign" class="tab-content">
+                <div class="card">
+                    <h2>Tanda Tangani Dokumen</h2>
+                    <p class="description">Gunakan kunci privat terenkripsi (password akun diperlukan)</p>
+                    <div class="form-group">
+                        <label>Pilih Dokumen</label>
+                        <select id="signDocSelect"><option value="">— pilih dokumen —</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Password (dekripsi kunci privat)</label>
+                        <input type="password" id="signPassword">
+                    </div>
+                    <button id="signBtn" class="btn btn-primary">Tanda Tangani</button>
+                    <div id="signResult" class="info-box hidden"></div>
+                    <div id="qrContainer" class="qr-container hidden">
+                        <h3>QR Verifikasi Cepat</h3>
+                        <div id="qrCanvas"></div>
+                        <p class="description">Pindai untuk verifikasi tanpa login</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Verify -->
+            <section id="verify" class="tab-content">
+                <div class="card">
+                    <h2>Verifikasi Tanda Tangan</h2>
+                    <div class="form-group">
+                        <label>Dokumen</label>
+                        <input type="file" id="verifyDocFile" accept=".txt,.pdf,.md,.json,.csv">
+                    </div>
+                    <div class="form-group">
+                        <label>File Signature (.sig.json)</label>
+                        <input type="file" id="verifySigFile" accept=".json,.sig.json,application/json">
+                    </div>
+                    <div class="action-buttons">
+                        <button id="verifyBtn" class="btn btn-primary">Verifikasi</button>
+                        <button id="exportPdfBtn" class="btn btn-secondary">Export Laporan PDF</button>
+                    </div>
+                    <div id="verificationResult" class="verification-result hidden">
+                        <div id="resultContent"></div>
+                    </div>
+                    <div id="verificationDetails" class="verification-details hidden">
+                        <h3>Detail Verifikasi</h3>
+                        <div class="detail-row"><label>Status</label><input id="verifyStatus" readonly></div>
+                        <div class="detail-row"><label>Hash dokumen</label><input id="verifyDocHash" readonly></div>
+                        <div class="detail-row"><label>Hash saat ditandatangani</label><input id="verifyExpectedHash" readonly></div>
+                        <div class="detail-row"><label>Dimodifikasi?</label><input id="verifyTampered" readonly></div>
+                        <div class="detail-row"><label>Penanda tangan</label><input id="verifySigner" readonly></div>
+                        <div class="detail-row"><label>Waktu</label><input id="verifySignedAt" readonly></div>
+                        <div id="multiSignerList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History -->
+            <section id="history" class="tab-content">
+                <div class="card">
+                    <h2>Riwayat Penandatanganan</h2>
+                    <table class="data-table" id="historyTable">
+                        <thead>
+                            <tr><th>Dokumen</th><th>Hash</th><th>Waktu</th><th>Aksi</th></tr>
+                        </thead>
+                        <tbody id="historyBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>SignDoc — RSA-2048 + SHA-256 | Kunci privat terenkripsi (PBKDF2 + Fernet)</p>
+        </footer>
+    </div>
+    <div id="toast" class="toast"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="assets/js/modal.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/signdoc-app.js"></script>
+</body>
+</html>
