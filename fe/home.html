@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignDoc - Sistem Tanda Tangan Digital</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/modal.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Main Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>SignDoc</h1>
+                <p>Sistem Tanda Tangan Digital Dokumen</p>
+                <p class="header-subtitle">
+                    Menggunakan RSA-2048 & SHA-256 - Keamanan Tingkat Tinggi
+                </p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Section -->
+            <div class="home-welcome-title">
+                <h2 class="home-welcome-h2">Selamat Datang di SignDoc</h2>
+                <p class="home-welcome-p">
+                    Platform tanda tangan digital yang aman dan mudah digunakan. 
+                    Verifikasi keaslian dokumen dan identitas penanda tangan dengan teknologi kriptografi modern.
+                </p>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="number">2048</div>
+                    <div class="label">Bit Encryption</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">256</div>
+                    <div class="label">Bit Hash</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">AES</div>
+                    <div class="label">Encrypted Keys</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">∞</div>
+                    <div class="label">Verifikasi</div>
+                </div>
+            </div>
+
+            <!-- Main Call to Action -->
+            <div class="cta-section">
+                <h2>Mulai Sekarang</h2>
+                <p>Buat tanda tangan digital Anda dan verifikasi dokumen dengan aman</p>
+                <a href="app.html" class="cta-btn">Buka Aplikasi SignDoc</a>
+            </div>
+
+            <!-- Cards Section -->
+            <div class="welcome-section">
+                <div class="welcome-card">
+                    <h3>Aplikasi</h3>
+                    <p>
+                        Aplikasi web lengkap untuk membuat dan memverifikasi tanda tangan digital. 
+                        Fitur lengkap dengan interface yang user-friendly.
+                    </p>
+                    <a href="app.html">Buka Aplikasi →</a>
+                </div>
+
+                <div class="welcome-card">
+                    <h3>Panduan Lengkap</h3>
+                    <p>
+                        Tutorial komprehensif tentang cara menggunakan SignDoc dan memahami 
+                        konsep-konsep kriptografi di baliknya.
+                    </p>
+                    <a href="guide.html">Baca Panduan →</a>
+                </div>
+
+                <div class="welcome-card">
+                    <h3>Demo & Contoh</h3>
+                    <p>
+                        Lihat contoh dokumen, hash, dan workflow lengkap untuk testing. 
+                        Sempurna untuk memahami alur kerja aplikasi.
+                    </p>
+                    <a href="demo.html">Lihat Demo →</a>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <section class="home-section">
+                <h2 class="home-section-title">Fitur Utama</h2>
+                <div class="features">
+                    <div class="feature-item">
+                        <strong>RSA-2048 Encryption</strong>
+                        <p>
+                            Enkripsi tingkat tinggi dengan 2048-bit untuk keamanan maksimal.
+                        </p>
+                    </div>
+                    <div class="feature-item">
+                        <strong>SHA-256 Hashing</strong>
+                        <p>
+                            Menjaga integritas data dan mendeteksi perubahan pada dokumen.
+                        </p>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Upload Dokumen</strong>
+                        <p>
+                            Support berbagai format file untuk kemudahan pengguna.
+                        </p>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Verifikasi Instant</strong>
+                        <p>
+                            Verifikasi tanda tangan secara real-time tanpa delay.
+                        </p>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Client-Side Processing</strong>
+                        <p>
+                            Semua proses di browser, data Anda tetap aman dan private.
+                        </p>
+                    </div>
+                    <div class="feature-item">
+                        <strong>Download & Share</strong>
+                        <p>
+                            Download dokumen dan tanda tangan untuk disimpan atau dibagikan.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technology Stack -->
+            <div class="tech-stack">
+                <h3 class="home-tech-title">Teknologi yang Digunakan</h3>
+                <div class="tech-items">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">RSA-2048</span>
+                    <span class="tech-badge">SHA-256</span>
+                    <span class="tech-badge">Web Crypto API</span>
+                    <span class="tech-badge">JSEncrypt</span>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <section class="home-section">
+                <h2 class="home-section-title">Cara Kerja</h2>
+                <div class="home-how-it-works">
+                    <div class="home-steps">
+                        <div class="home-step-box">
+                            <div class="home-step-icon">1</div>
+                            <strong class="home-step-title">Generate Kunci</strong>
+                            <p class="home-step-desc">
+                                Buat pasangan kunci RSA-2048
+                            </p>
+                        </div>
+                        <div class="home-step-box">
+                            <div class="home-step-icon">2</div>
+                            <strong class="home-step-title">Hash Dokumen</strong>
+                            <p class="home-step-desc">
+                                Hitung SHA-256 dokumen
+                            </p>
+                        </div>
+                        <div class="home-step-box">
+                            <div class="home-step-icon">3</div>
+                            <strong class="home-step-title">Tanda Tangani</strong>
+                            <p class="home-step-desc">
+                                Buat tanda tangan dengan kunci privat
+                            </p>
+                        </div>
+                        <div class="home-step-box">
+                            <div class="home-step-icon">4</div>
+                            <strong class="home-step-title">Verifikasi</strong>
+                            <p class="home-step-desc">
+                                Verifikasi dengan kunci publik
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Security Notice -->
+            <section class="home-section">
+                <div class="home-security">
+                    <h3 class="home-security-title">Keamanan & Privasi</h3>
+                    <ul class="home-security-list">
+                        <li><strong>Client-Side Processing:</strong> Semua proses dilakukan di browser Anda, bukan di server</li>
+                        <li><strong>No Data Storage:</strong> Data tidak disimpan atau dikirim ke mana pun</li>
+                        <li><strong>End-to-End:</strong> Kunci privat Anda tetap rahasia selamanya</li>
+                        <li><strong>Military-Grade:</strong> Menggunakan RSA-2048 dan SHA-256 yang telah teruji</li>
+                        <li><strong>Open Source:</strong> Kode terbuka, dapat diaudit oleh siapa saja</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Use Cases -->
+            <section class="home-section">
+                <h2 class="home-section-title">Kasus Penggunaan</h2>
+                <div class="home-use-cases">
+                    <div class="home-use-case-item">
+                        <strong class="home-use-case-title">E-Contract</strong>
+                        <p class="home-use-case-desc">
+                            Perjanjian digital yang sah dan dapat diverifikasi
+                        </p>
+                    </div>
+                    <div class="home-use-case-item">
+                        <strong class="home-use-case-title">Bisnis</strong>
+                        <p class="home-use-case-desc">
+                            Dokumentasi dan approval proses bisnis
+                        </p>
+                    </div>
+                    <div class="home-use-case-item">
+                        <strong class="home-use-case-title">Pendidikan</strong>
+                        <p class="home-use-case-desc">
+                            Sertifikat digital dan kelulusan
+                        </p>
+                    </div>
+                    <div class="home-use-case-item">
+                        <strong class="home-use-case-title">Legal</strong>
+                        <p class="home-use-case-desc">
+                            Dokumen legal yang terverifikasi
+                        </p>
+                    </div>
+                    <div class="home-use-case-item">
+                        <strong class="home-use-case-title">Keuangan</strong>
+                        <p class="home-use-case-desc">
+                            Invoice dan transaksi digital
+                        </p>
+                    </div>
+                    <div class="home-use-case-item">
+                        <strong class="home-use-case-title">Notaris</strong>
+                        <p class="home-use-case-desc">
+                            Layanan notaris digital online
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ -->
+            <section class="home-section">
+                <h2 class="home-section-title">Pertanyaan Sering Diajukan</h2>
+                <div class="home-faq">
+                    <details class="home-faq-item">
+                        <summary class="home-faq-summary">
+                            Apakah tanda tangan digital ini sah secara hukum?
+                        </summary>
+                        <p class="home-faq-content">
+                            SignDoc dibuat untuk tujuan pembelajaran dan demonstrasi. 
+                            Untuk keperluan legal yang serius, konsultasikan dengan ahli hukum dan patuhi regulasi lokal.
+                        </p>
+                    </details>
+
+                    <details class="home-faq-item">
+                        <summary class="home-faq-summary">
+                            Bagaimana jika saya lupa kunci privat?
+                        </summary>
+                        <p class="home-faq-content">
+                            Kunci privat tidak dapat dipulihkan jika hilang. Pastikan Anda membuat backup di tempat aman.
+                        </p>
+                    </details>
+
+                    <details class="home-faq-item">
+                        <summary class="home-faq-summary">
+                            Apakah data saya aman?
+                        </summary>
+                        <p class="home-faq-content">
+                            Ya! Semua proses dilakukan di browser Anda. Data tidak dikirim ke server manapun.
+                        </p>
+                    </details>
+
+                    <details class="home-faq-item">
+                        <summary class="home-faq-summary">
+                            Browser mana yang didukung?
+                        </summary>
+                        <p class="home-faq-content">
+                            Chrome, Firefox, Safari, dan Edge (versi terbaru). 
+                            Pastikan JavaScript diaktifkan.
+                        </p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Footer CTA -->
+            <div class="cta-section">
+                <h2>Siap Memulai?</h2>
+                <p>Buat tanda tangan digital Anda hari ini</p>
+                <a href="app.html" class="cta-btn">Buka Aplikasi →</a>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p><strong>SignDoc</strong> - Sistem Tanda Tangan Digital Dokumen</p>
+            <p class="footer-subtitle">Menggunakan RSA-2048 & SHA-256 | Semua proses di sisi klien (browser)</p>
+            <p class="footer-copyright">
+                © 2026 SignDoc. Dibuat untuk tujuan pendidikan dan demonstrasi kriptografi.
+            </p>
+        </footer>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon"></div>
+                <h2 class="modal-title">Modal Title</h2>
+            </div>
+            <div class="modal-body">Modal content goes here</div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/modal.js"></script>
+    <script src="assets/js/home.js"></script>
+</body>
+</html>

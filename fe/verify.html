@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignDoc — Verifikasi Publik</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/modal.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>Verifikasi SignDoc</h1>
+                <p>Verifikasi cepat tanpa login — via QR atau ID dokumen</p>
+            </div>
+        </header>
+        <main class="main-content">
+            <div class="card">
+                <div id="publicResult" class="verification-result">
+                    <p>Memuat data verifikasi...</p>
+                </div>
+                <div id="publicSigners" class="verification-details"></div>
+                <p class="description"><a href="app.html">Buka aplikasi lengkap</a></p>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/api.js"></script>
+    <script>
+        const params = new URLSearchParams(location.search);
+        const docId = params.get("doc");
+        const el = document.getElementById("publicResult");
+        const signersEl = document.getElementById("publicSigners");
+
+        if (!docId) {
+            el.className = "verification-result error";
+            el.innerHTML = "<strong>ID dokumen tidak ditemukan</strong>";
+        } else {
+            SignDocAPI.publicVerify(docId).then((data) => {
+                const ok = data.status === "VALID";
+                el.className = `verification-result ${ok ? "success" : "error"}`;
+                el.innerHTML = `
+                    <strong>${ok ? "✅ VALID" : data.tampered ? "⚠️ TAMPERED" : "❌ INVALID"}</strong>
+                    <p><b>${data.filename}</b></p>
+                    <p>${data.tampered ? "⚠️ Dokumen telah dimodifikasi sejak ditandatangani!" : data.message || ""}</p>
+                    <p>Hash: <code>${data.content_hash}</code></p>
+                    <p>Algoritma: ${data.algorithm}</p>
+                `;
+                if (data.signers?.length) {
+                    signersEl.innerHTML = "<h3>Penanda Tangan</h3><ul>" +
+                        data.signers.map(s =>
+                            `<li>${s.username} — ${s.status} (${s.signed_at})</li>`
+                        ).join("") + "</ul>";
+                }
+            }).catch((e) => {
+                el.className = "verification-result error";
+                el.innerHTML = `<strong>Error</strong><p>${e.message}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
