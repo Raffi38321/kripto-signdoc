@@ -4,10 +4,10 @@ Tema 1 UAS Kriptografi Modern: verifikasi keaslian dokumen dan identitas penanda
 
 ## Struktur
 
-| Folder | Isi |
-|--------|-----|
-| `be/` | Backend FastAPI, SQLite, kriptografi server-side |
-| `fe/` | Frontend HTML/JS (demo client-side + aplikasi terintegrasi API) |
+| Folder | Isi                                                             |
+| ------ | --------------------------------------------------------------- |
+| `be/`  | Backend FastAPI, SQLite, kriptografi server-side                |
+| `fe/`  | Frontend HTML/JS (demo client-side + aplikasi terintegrasi API) |
 
 ## Menjalankan
 
@@ -25,13 +25,13 @@ Buka:
 
 ## Fitur Wajib
 
-| Fitur | Implementasi |
-|-------|----------------|
+| Fitur                     | Implementasi                                                                |
+| ------------------------- | --------------------------------------------------------------------------- |
 | Registrasi + key pair RSA | `POST /api/auth/register` — privat dienkripsi PBKDF2+Fernet dengan password |
-| Upload dokumen + hash | `POST /api/documents/upload` — SHA-256 atas byte file |
-| Tanda tangan | `POST /api/documents/{id}/sign` — PKCS#1 v1.5 + Prehashed(SHA-256) |
-| Verifikasi | `POST /api/verify` — unggah dokumen + `.sig.json` → VALID/INVALID + detail |
-| Riwayat | `GET /api/documents/history` |
+| Upload dokumen + hash     | `POST /api/documents/upload` — SHA-256 atas byte file                       |
+| Tanda tangan              | `POST /api/documents/{id}/sign` — PKCS#1 v1.5 + Prehashed(SHA-256)          |
+| Verifikasi                | `POST /api/verify` — unggah dokumen + `.sig.json` → VALID/INVALID + detail  |
+| Riwayat                   | `GET /api/documents/history`                                                |
 
 ## Fitur Pengembangan (nilai A)
 

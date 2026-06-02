@@ -253,3 +253,38 @@ def qr_verification_data(document_id: str):
         "verify_url": f"/fe/verify.html?doc={document_id}",
         "document_id": document_id,
     }
+
+
+@router.get("/{document_id}/info")
+def get_document_info(document_id: str, user: dict = Depends(get_current_user)):
+    """Ambil detail dokumen by ID — untuk multi-sign, user lain bisa lookup sebelum menandatangani."""
+    with get_connection() as conn:
+        row = conn.execute(
+            """
+            SELECT d.*, u.username AS owner_username,
+                   (SELECT COUNT(*) FROM signatures s WHERE s.document_id = d.id) AS signature_count
+            FROM documents d
+            JOIN users u ON u.id = d.owner_id
+            WHERE d.id = ?
+            """,
+            (document_id,),
+        ).fetchone()
+        if not row:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Dokumen tidak ditemukan")
+
+        signers = _get_signers(conn, document_id)
+        already_signed = any(s["user_id"] == user["id"] for s in signers)
+        current_hash = sha256_hex(_read_file_bytes(Path(row["stored_path"])))
+
+    return {
+        "id": row["id"],
+        "filename": row["filename"],
+        "content_hash": row["content_hash"],
+        "mime_type": row["mime_type"],
+        "created_at": row["created_at"],
+        "owner_username": row["owner_username"],
+        "signature_count": row["signature_count"],
+        "signers": signers,
+        "tampered": current_hash != row["content_hash"],
+        "already_signed": already_signed,
+    }
