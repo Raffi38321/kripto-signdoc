@@ -17,11 +17,14 @@ pip install -e .
 python main.py
 ```
 
-Buka:
+Server berjalan di `http://127.0.0.1:8000` dan juga bisa diakses dari jaringan lokal via IP komputer (mis. `http://192.168.x.x:8000`).
 
-- **Aplikasi lengkap:** http://127.0.0.1:8000/fe/app.html
-- **Demo client-side:** http://127.0.0.1:8000/fe/index.html
-- **Verifikasi publik (QR):** http://127.0.0.1:8000/fe/verify.html?doc={document_id}
+| URL                        | Keterangan                                               |
+| -------------------------- | -------------------------------------------------------- |
+| `/fe/app.html`             | Aplikasi utama (login, upload, sign, verify, multi-sign) |
+| `/fe/index.html`           | Demo client-side tanpa akun                              |
+| `/fe/verify.html?doc={id}` | Verifikasi publik via QR — tanpa login                   |
+| `/docs`                    | Swagger API docs                                         |
 
 ## Fitur Wajib
 
@@ -35,10 +38,29 @@ Buka:
 
 ## Fitur Pengembangan (nilai A)
 
-- **Multi-signer:** beberapa user menandatangani dokumen yang sama (`signatures` UNIQUE per user)
-- **QR verifikasi:** setelah sign, QR menuju `verify.html?doc=...` (tanpa login)
-- **Notifikasi modifikasi:** flag `tampered` jika hash file ≠ hash saat upload/sign
-- **Export PDF:** `POST /api/verify/report-pdf`
+- **Multi-signer:** beberapa user menandatangani dokumen yang sama — User B bisa lookup via Document ID di tab Sign, kemudian menandatangani dengan password akunnya sendiri
+- **QR verifikasi:** setelah sign, QR otomatis muncul menuju `verify.html?doc=...` (tanpa login); URL mengikuti hostname aktual sehingga bisa dipindai dari device lain di jaringan yang sama
+- **Notifikasi modifikasi:** flag `tampered` jika hash file ≠ hash saat upload/sign, ditampilkan di daftar dokumen dan hasil verifikasi
+- **Export PDF:** `POST /api/verify/report-pdf` — laporan formal hasil verifikasi menggunakan ReportLab
+
+## Ringkasan Endpoint API
+
+| Method | Endpoint                             | Auth | Fungsi                                   |
+| ------ | ------------------------------------ | ---- | ---------------------------------------- |
+| POST   | `/api/auth/register`                 | —    | Registrasi + generate RSA-2048 keypair   |
+| POST   | `/api/auth/login`                    | —    | Login, return JWT (24 jam)               |
+| GET    | `/api/auth/me`                       | JWT  | Info profil + public key PEM             |
+| POST   | `/api/documents/upload`              | JWT  | Upload file + hitung SHA-256             |
+| GET    | `/api/documents`                     | JWT  | Daftar dokumen milik/ditandatangani user |
+| GET    | `/api/documents/history`             | JWT  | Riwayat penandatanganan                  |
+| POST   | `/api/documents/{id}/sign`           | JWT  | Tanda tangani dokumen                    |
+| GET    | `/api/documents/{id}/signature-file` | JWT  | Download `.sig.json`                     |
+| GET    | `/api/documents/{id}/info`           | JWT  | Lookup dokumen by ID (untuk multi-sign)  |
+| GET    | `/api/documents/{id}/qr`             | —    | Data QR verifikasi                       |
+| POST   | `/api/verify`                        | —    | Verifikasi dokumen + signature file      |
+| GET    | `/api/verify/public/{id}`            | —    | Verifikasi publik via QR                 |
+| POST   | `/api/verify/report-pdf`             | —    | Export laporan verifikasi PDF            |
+| GET    | `/api/health`                        | —    | Health check                             |
 
 ## Jawaban Pertanyaan Kriptografi (untuk laporan)
 
@@ -64,14 +86,20 @@ MD5 punya kerentanan collision praktis — penyerang bisa membuat dua file berbe
 
 ```mermaid
 sequenceDiagram
-    participant U as User
+    participant A as User A
+    participant B as User B
     participant S as Server
-    U->>S: Register (password)
-    S->>S: Generate RSA, encrypt private key
-    U->>S: Upload PDF
-    S->>S: SHA-256(file)
-    U->>S: Sign(doc_id, password)
-    S->>S: Decrypt key, sign hash
-    U->>S: Verify(file, sig.json)
-    S->>S: Compare hash, RSA verify
+
+    A->>S: Register (password) → RSA keypair dibuat
+    A->>S: Upload PDF → SHA-256 hash disimpan
+    A->>S: Sign(doc_id, password) → signature disimpan
+    A->>B: Bagikan document_id
+
+    B->>S: Register/Login
+    B->>S: Lookup(doc_id) → info dokumen + signer
+    B->>S: Sign(doc_id, password_B) → signature B disimpan
+
+    Note over A,S: Siapapun bisa verifikasi
+    A->>S: Verify(file, sig.json) → VALID/INVALID per signer
+    A->>S: QR scan → verify.html?doc=id → status publik
 ```
