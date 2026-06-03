@@ -1,11 +1,17 @@
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 UPLOAD_DIR = DATA_DIR / "uploads"
 DB_PATH = DATA_DIR / "signdoc.db"
 
-SECRET_KEY = "signdoc-dev-secret-change-in-production"
+# Untuk produksi: set SIGNDOC_SECRET_KEY di file .env atau environment
+SECRET_KEY = os.environ.get("SIGNDOC_SECRET_KEY", "signdoc-dev-secret-change-in-production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
